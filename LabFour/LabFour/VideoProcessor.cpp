@@ -8,6 +8,10 @@
 
 #include "VideoProcessor.hpp"
 
+// Constructor
+//
+// Init variables
+// Open video / camera stream
 VideoProcessor::VideoProcessor(string filePath){
     
     // Setup parameters
@@ -31,6 +35,12 @@ VideoProcessor::VideoProcessor(string filePath){
     }
 }
 
+// Video processing
+// ================
+//
+// Init window
+// Loop through video
+// Listen for exit
 void VideoProcessor::processVideo() {
     
     // Window & trackbars
@@ -44,13 +54,20 @@ void VideoProcessor::processVideo() {
         processImage();
         // Debug data
         printf("Canny High \t\t::%d \nCanny Low \t\t::%d \nFrame Number \t::%d\n",cannyHigh, cannyLow, frameNumber);
-        // Listen for exit key
+        // Listen for exit key & break loop
         if(waitKey(30) >= 0) {
             break;
         }
     }
 }
 
+// Image processing
+// ================
+//
+// Copy current frame
+// Check for empty frame
+// Convert frame to gray scale
+// Blur frame & perform canny edge detection
 void VideoProcessor::processImage() {
 
     // Copy data from video / camera to frame
@@ -68,15 +85,12 @@ void VideoProcessor::processImage() {
     
     //resize(frame, frame, Size(440,248));
     
-    // Image processing
-    // ================
-    //
-    // Convert frame to gray scale
-    // Blur frame & perform canny edge detection
-    //
+    // Begin image processing
     cvtColor(frame, edges, CV_BGR2GRAY);
     GaussianBlur(edges, edges, Size(7, 7), 1.5, 1.5);
     Canny(edges, edges, cannyLow, cannyHigh, 3);
+    
+    // merge images & display
     frame.copyTo(blend);
     blend.setTo(255, edges);
     imshow("blended", blend);
