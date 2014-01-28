@@ -11,17 +11,23 @@
 //-----------------------------------------------------------------------
 // Main
 //-----------------------------------------------------------------------
-int main(int argc, const char * argv[])
-{
-    // Check any arguments have been passed
+int main(int argc, const char * argv[]) {
+    // Default fp will load avaiable cameras
+    string fp = "none";
+    
+    // Check if any arguments have been passed and use first for video loading
     if (argc >= 2) {
-        
-        VideoProcessor vp(argv[1]);
-        if (vp.ERROR) {
-            cerr << vp.err << endl;
-            return -1;
-        }
-        vp.playMedia();
+        fp = argv[1];
     }
+    
+    // Construct & check for errors
+    VideoProcessor vp(fp);
+    if (vp.ERROR) {
+        cerr << vp.err << endl;
+        return -1;
+    }
+    
+    // Play video applying 
+    vp.processVideo();
     return 0;
 }

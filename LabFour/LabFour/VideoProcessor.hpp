@@ -22,6 +22,7 @@ class VideoProcessor {
     
     Mat edges;
     Mat blend;
+    Mat frame;
     VideoCapture camera;
     
     int cannyLow;
@@ -38,7 +39,7 @@ class VideoProcessor {
     VideoProcessor(string filePath);
     
     bool checkInputArgs(int argc, const char * argv[]);
-    void playMedia();
+    void processVideo();
     void processImage();
     void setupControlWindow(int);
     
