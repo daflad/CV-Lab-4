@@ -92,14 +92,15 @@ void VideoProcessor::processImage() {
 
     GaussianBlur(edges, src, Size(9, 9), 2, 2);
     GaussianBlur(edges, edges, Size(9, 9), 2, 2);
-
+    
+    
     Canny(edges, edges, cannyLow, cannyHigh, 3);
     
     HoughCircles( src, circles, CV_HOUGH_GRADIENT, 1, src.rows/8, cannyHigh, cannyLow, 0, 0 );
     
     // merge images & display
     frame.copyTo(blend);
-    blend.setTo(255, edges);
+    blend.setTo(Scalar(0,255,0), edges);
     
     // Draw the circles detected
     for( size_t i = 0; i < circles.size(); i++ ) {
@@ -107,7 +108,7 @@ void VideoProcessor::processImage() {
         Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
         int radius = cvRound(circles[i][2]);
         // circle center
-        circle( blend, center, 3, Scalar(0,255,0), -1, 8, 0 );
+        circle( blend, center, 3, Scalar(255,100,100), -1, 8, 0 );
         // circle outline
         circle( blend, center, radius, Scalar(0,0,255), 3, 8, 0 );
     }

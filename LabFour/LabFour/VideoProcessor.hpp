@@ -30,8 +30,6 @@ class VideoProcessor {
     int cannyHigh;
     int frameNumber;
     
-    float threshold;
-    
     string vidPath;
     
     bool ERROR;
