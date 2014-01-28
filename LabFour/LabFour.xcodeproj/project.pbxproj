@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D43EC121897F56E009E0C57 /* VideoProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D43EC101897F56E009E0C57 /* VideoProcessor.cpp */; };
 		6DD785B61896C44500678D8B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD785B51896C44500678D8B /* main.cpp */; };
 		6DD785B81896C44500678D8B /* LabFour.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6DD785B71896C44500678D8B /* LabFour.1 */; };
 		6DD7861C1897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD785E51897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */; };
@@ -80,6 +81,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6D43EC101897F56E009E0C57 /* VideoProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoProcessor.cpp; sourceTree = "<group>"; };
+		6D43EC111897F56E009E0C57 /* VideoProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VideoProcessor.hpp; sourceTree = "<group>"; };
 		6DD785B21896C44500678D8B /* LabFour */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LabFour; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DD785B51896C44500678D8B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6DD785B71896C44500678D8B /* LabFour.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = LabFour.1; sourceTree = "<group>"; };
@@ -228,6 +231,8 @@
 			children = (
 				6DD785B51896C44500678D8B /* main.cpp */,
 				6DD785B71896C44500678D8B /* LabFour.1 */,
+				6D43EC101897F56E009E0C57 /* VideoProcessor.cpp */,
+				6D43EC111897F56E009E0C57 /* VideoProcessor.hpp */,
 			);
 			path = LabFour;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D43EC121897F56E009E0C57 /* VideoProcessor.cpp in Sources */,
 				6DD785B61896C44500678D8B /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,6 +481,7 @@
 				6DD785BD1896C44500678D8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
