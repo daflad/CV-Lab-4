@@ -15,7 +15,7 @@
 VideoProcessor::VideoProcessor(string filePath){
     
     // Setup parameters
-    cannyLow = 0;
+    cannyLow = 1;
     cannyHigh = 255;
     frameNumber = 1;
     ERROR = false;
@@ -23,7 +23,7 @@ VideoProcessor::VideoProcessor(string filePath){
     
     // Attempt to load video
     camera = VideoCapture(vidPath);
-    
+    // Check video
     if (!camera.isOpened()) {
         // Attempt to load camera if no video
         camera = VideoCapture(0);
@@ -53,7 +53,7 @@ void VideoProcessor::processVideo() {
         // Process each frame as it comes in
         processImage();
         // Debug data
-        printf("Canny High \t\t::%d \nCanny Low \t\t::%d \nFrame Number \t::%d\n",cannyHigh, cannyLow, frameNumber);
+        // printf("Canny High \t\t::%d \nCanny Low \t\t::%d \nFrame Number \t::%d\n",cannyHigh, cannyLow, frameNumber);
         // Listen for exit key & break loop
         if(waitKey(30) >= 0) {
             break;
@@ -68,6 +68,7 @@ void VideoProcessor::processVideo() {
 // Check for empty frame
 // Convert frame to gray scale
 // Blur frame & perform canny edge detection
+// Blur frame & perform HoughCircle detection
 void VideoProcessor::processImage() {
 
     // Copy data from video / camera to frame
@@ -86,13 +87,32 @@ void VideoProcessor::processImage() {
     //resize(frame, frame, Size(440,248));
     
     // Begin image processing
+
     cvtColor(frame, edges, CV_BGR2GRAY);
-    GaussianBlur(edges, edges, Size(7, 7), 1.5, 1.5);
+
+    GaussianBlur(edges, src, Size(9, 9), 2, 2);
+    GaussianBlur(edges, edges, Size(9, 9), 2, 2);
+
     Canny(edges, edges, cannyLow, cannyHigh, 3);
+    
+    HoughCircles( src, circles, CV_HOUGH_GRADIENT, 1, src.rows/8, cannyHigh, cannyLow, 0, 0 );
     
     // merge images & display
     frame.copyTo(blend);
     blend.setTo(255, edges);
-    imshow("blended", blend);
+    
+    
+    // Draw the circles detected
+    for( size_t i = 0; i < circles.size(); i++ ) {
+        printf("\ndrawing circle : %zu", i+1);
+        Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
+        int radius = cvRound(circles[i][2]);
+        // circle center
+        circle( blend, center, 3, Scalar(0,255,0), -1, 8, 0 );
+        // circle outline
+        circle( blend, center, radius, Scalar(0,0,255), 3, 8, 0 );
+    }
 
+    imshow("blended", blend );
+    
 }

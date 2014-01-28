@@ -23,6 +23,7 @@ class VideoProcessor {
     Mat edges;
     Mat blend;
     Mat frame;
+    Mat src;
     VideoCapture camera;
     
     int cannyLow;
@@ -35,6 +36,8 @@ class VideoProcessor {
     
     bool ERROR;
     string err;
+    
+    vector<Vec3f> circles;
     
     VideoProcessor(string filePath);
     
