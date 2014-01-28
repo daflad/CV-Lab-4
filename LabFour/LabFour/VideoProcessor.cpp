@@ -15,8 +15,8 @@
 VideoProcessor::VideoProcessor(string filePath){
     
     // Setup parameters
-    cannyLow = 1;
-    cannyHigh = 255;
+    cannyLow = 45;
+    cannyHigh =  50;
     frameNumber = 1;
     ERROR = false;
     vidPath = filePath;
@@ -101,10 +101,9 @@ void VideoProcessor::processImage() {
     frame.copyTo(blend);
     blend.setTo(255, edges);
     
-    
     // Draw the circles detected
     for( size_t i = 0; i < circles.size(); i++ ) {
-        printf("\ndrawing circle : %zu", i+1);
+
         Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
         int radius = cvRound(circles[i][2]);
         // circle center
