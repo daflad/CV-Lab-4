@@ -8,10 +8,20 @@
 
 #include "VideoProcessor.hpp"
 
-int main(int argc, char* argv[]) {
-
-    VideoProcessor vp(argv[1]);
-    
-    return vp.processImage();
-    
+//-----------------------------------------------------------------------
+// Main
+//-----------------------------------------------------------------------
+int main(int argc, const char * argv[])
+{
+    // Check any arguments have been passed
+    if (argc >= 2) {
+        
+        VideoProcessor vp(argv[1]);
+        if (vp.ERROR) {
+            cerr << vp.err << endl;
+            return -1;
+        }
+        vp.playMedia();
+    }
+    return 0;
 }

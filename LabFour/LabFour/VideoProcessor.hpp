@@ -13,7 +13,6 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-
 using namespace cv;
 using namespace std;
 
@@ -25,17 +24,24 @@ class VideoProcessor {
     Mat blend;
     VideoCapture camera;
     
+    int cannyLow;
+    int cannyHigh;
+    int frameNumber;
+    
+    float threshold;
+    
+    string vidPath;
+    
     bool ERROR;
     string err;
     
     VideoProcessor(string filePath);
     
     bool checkInputArgs(int argc, const char * argv[]);
-    
-    int processImage();
+    void playMedia();
+    void processImage();
     void setupControlWindow(int);
     
 };
-
 
 #endif /* defined(__LabFour__VideoProcessor__) */
