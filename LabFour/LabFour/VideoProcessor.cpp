@@ -102,7 +102,6 @@ void VideoProcessor::processImage() {
     GaussianBlur(edges, src, Size(9, 9), 2, 2);
     GaussianBlur(edges, edges, Size(9, 9), 2, 2);
     
-    
     Canny(edges, edges, cannyLow, cannyHigh, 3);
     
     HoughCircles( src, circles, CV_HOUGH_GRADIENT, 1, src.rows/8, cannyHigh, cannyLow, 0, 0 );
