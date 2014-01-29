@@ -18,6 +18,8 @@ VideoProcessor::VideoProcessor(string filePath){
     cannyLow = 45;
     cannyHigh =  50;
     frameNumber = 1;
+    
+    paused = false;
     ERROR = false;
     vidPath = filePath;
     
@@ -50,12 +52,17 @@ void VideoProcessor::processVideo() {
     
     // Until exit key pressed. . .
     while (true) {
-        // Process each frame as it comes in
         processImage();
         // Debug data
         // printf("Canny High \t\t::%d \nCanny Low \t\t::%d \nFrame Number \t::%d\n",cannyHigh, cannyLow, frameNumber);
-        // Listen for exit key & break loop
-        if(waitKey(30) >= 0) {
+        // Listen for key press
+        int k = waitKey(30);
+        
+        if(k == 32) {
+            // Space bar pauses % unpauses video
+            paused = !paused;
+        } else if (k != -1) {
+            // Any other key exits program
             break;
         }
     }
@@ -72,7 +79,9 @@ void VideoProcessor::processVideo() {
 void VideoProcessor::processImage() {
 
     // Copy data from video / camera to frame
-    camera >> frame;
+    if (!paused) {
+        camera >> frame;
+    }
     
     // Check for empty frame as this is end of video
     if (frame.empty()) {

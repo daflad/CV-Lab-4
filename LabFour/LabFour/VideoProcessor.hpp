@@ -32,6 +32,7 @@ class VideoProcessor {
     
     string vidPath;
     
+    bool paused;
     bool ERROR;
     string err;
     
