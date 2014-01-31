@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6DD785B11896C44500678D8B"
-               BuildableName = "LabFour"
-               BlueprintName = "LabFour"
-               ReferencedContainer = "container:LabFour.xcodeproj">
+               BuildableName = "LabFive"
+               BlueprintName = "LabFive"
+               ReferencedContainer = "container:LabFive.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6DD785B11896C44500678D8B"
-            BuildableName = "LabFour"
-            BlueprintName = "LabFour"
-            ReferencedContainer = "container:LabFour.xcodeproj">
+            BuildableName = "LabFive"
+            BlueprintName = "LabFive"
+            ReferencedContainer = "container:LabFive.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6DD785B11896C44500678D8B"
-            BuildableName = "LabFour"
-            BlueprintName = "LabFour"
-            ReferencedContainer = "container:LabFour.xcodeproj">
+            BuildableName = "LabFive"
+            BlueprintName = "LabFive"
+            ReferencedContainer = "container:LabFive.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6DD785B11896C44500678D8B"
-            BuildableName = "LabFour"
-            BlueprintName = "LabFour"
-            ReferencedContainer = "container:LabFour.xcodeproj">
+            BuildableName = "LabFive"
+            BlueprintName = "LabFive"
+            ReferencedContainer = "container:LabFive.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

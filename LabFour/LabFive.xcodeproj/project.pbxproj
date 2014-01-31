@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6D43EC121897F56E009E0C57 /* VideoProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D43EC101897F56E009E0C57 /* VideoProcessor.cpp */; };
-		6DD785B61896C44500678D8B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD785B51896C44500678D8B /* main.cpp */; };
-		6DD785B81896C44500678D8B /* LabFour.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6DD785B71896C44500678D8B /* LabFour.1 */; };
+		6D4F6687189BC4C2006F746E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D4F6684189BC4C2006F746E /* main.cpp */; };
+		6D4F6688189BC4C2006F746E /* VideoProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D4F6685189BC4C2006F746E /* VideoProcessor.cpp */; };
 		6DD7861C1897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD785E51897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */; };
 		6DD7861D1897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD785E61897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */; };
 		6DD7861E1897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD785E71897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */; };
@@ -74,18 +73,16 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				6DD785B81896C44500678D8B /* LabFour.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6D43EC101897F56E009E0C57 /* VideoProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoProcessor.cpp; sourceTree = "<group>"; };
-		6D43EC111897F56E009E0C57 /* VideoProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VideoProcessor.hpp; sourceTree = "<group>"; };
-		6DD785B21896C44500678D8B /* LabFour */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LabFour; sourceTree = BUILT_PRODUCTS_DIR; };
-		6DD785B51896C44500678D8B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		6DD785B71896C44500678D8B /* LabFour.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = LabFour.1; sourceTree = "<group>"; };
+		6D4F6684189BC4C2006F746E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = LabFive/main.cpp; sourceTree = SOURCE_ROOT; };
+		6D4F6685189BC4C2006F746E /* VideoProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoProcessor.cpp; path = LabFive/VideoProcessor.cpp; sourceTree = SOURCE_ROOT; };
+		6D4F6686189BC4C2006F746E /* VideoProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VideoProcessor.hpp; path = LabFive/VideoProcessor.hpp; sourceTree = SOURCE_ROOT; };
+		6DD785B21896C44500678D8B /* LabFive */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LabFive; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DD785E51897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_calib3d.2.4.7.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_calib3d.2.4.7.dylib; sourceTree = "<group>"; };
 		6DD785E61897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_calib3d.2.4.7.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_calib3d.2.4.7.dylib; sourceTree = "<group>"; };
 		6DD785E71897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_calib3d.2.4.7.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_calib3d.2.4.7.dylib; sourceTree = "<group>"; };
@@ -213,7 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				6DD785E41896C96C00678D8B /* OpenCV */,
-				6DD785B41896C44500678D8B /* LabFour */,
+				6DD785B41896C44500678D8B /* LabFive */,
 				6DD785B31896C44500678D8B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -221,19 +218,19 @@
 		6DD785B31896C44500678D8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6DD785B21896C44500678D8B /* LabFour */,
+				6DD785B21896C44500678D8B /* LabFive */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6DD785B41896C44500678D8B /* LabFour */ = {
+		6DD785B41896C44500678D8B /* LabFive */ = {
 			isa = PBXGroup;
 			children = (
-				6DD785B51896C44500678D8B /* main.cpp */,
-				6DD785B71896C44500678D8B /* LabFour.1 */,
-				6D43EC101897F56E009E0C57 /* VideoProcessor.cpp */,
-				6D43EC111897F56E009E0C57 /* VideoProcessor.hpp */,
+				6D4F6684189BC4C2006F746E /* main.cpp */,
+				6D4F6685189BC4C2006F746E /* VideoProcessor.cpp */,
+				6D4F6686189BC4C2006F746E /* VideoProcessor.hpp */,
 			);
+			name = LabFive;
 			path = LabFour;
 			sourceTree = "<group>";
 		};
@@ -302,9 +299,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6DD785B11896C44500678D8B /* LabFour */ = {
+		6DD785B11896C44500678D8B /* LabFive */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6DD785BB1896C44500678D8B /* Build configuration list for PBXNativeTarget "LabFour" */;
+			buildConfigurationList = 6DD785BB1896C44500678D8B /* Build configuration list for PBXNativeTarget "LabFive" */;
 			buildPhases = (
 				6DD785AE1896C44500678D8B /* Sources */,
 				6DD785AF1896C44500678D8B /* Frameworks */,
@@ -314,9 +311,9 @@
 			);
 			dependencies = (
 			);
-			name = LabFour;
+			name = LabFive;
 			productName = LabFour;
-			productReference = 6DD785B21896C44500678D8B /* LabFour */;
+			productReference = 6DD785B21896C44500678D8B /* LabFive */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -328,7 +325,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Stephen John Russell";
 			};
-			buildConfigurationList = 6DD785AD1896C44500678D8B /* Build configuration list for PBXProject "LabFour" */;
+			buildConfigurationList = 6DD785AD1896C44500678D8B /* Build configuration list for PBXProject "LabFive" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -340,7 +337,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6DD785B11896C44500678D8B /* LabFour */,
+				6DD785B11896C44500678D8B /* LabFive */,
 			);
 		};
 /* End PBXProject section */
@@ -350,8 +347,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D43EC121897F56E009E0C57 /* VideoProcessor.cpp in Sources */,
-				6DD785B61896C44500678D8B /* main.cpp in Sources */,
+				6D4F6688189BC4C2006F746E /* VideoProcessor.cpp in Sources */,
+				6D4F6687189BC4C2006F746E /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,11 +433,8 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/local/Cellar/opencv/2.4.7.1/include,
 				);
-				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/opencv/2.4.7.1/lib,
-					"/Users/stephenjohnrussell/dev/CV-Lab-4/LabFour/LabFour/libs",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv/2.4.7.1/lib;
+				PRODUCT_NAME = LabFive;
 			};
 			name = Debug;
 		};
@@ -454,18 +448,15 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/local/Cellar/opencv/2.4.7.1/include,
 				);
-				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/opencv/2.4.7.1/lib,
-					"/Users/stephenjohnrussell/dev/CV-Lab-4/LabFour/LabFour/libs",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv/2.4.7.1/lib;
+				PRODUCT_NAME = LabFive;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6DD785AD1896C44500678D8B /* Build configuration list for PBXProject "LabFour" */ = {
+		6DD785AD1896C44500678D8B /* Build configuration list for PBXProject "LabFive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6DD785B91896C44500678D8B /* Debug */,
@@ -474,7 +465,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6DD785BB1896C44500678D8B /* Build configuration list for PBXNativeTarget "LabFour" */ = {
+		6DD785BB1896C44500678D8B /* Build configuration list for PBXNativeTarget "LabFive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6DD785BC1896C44500678D8B /* Debug */,
