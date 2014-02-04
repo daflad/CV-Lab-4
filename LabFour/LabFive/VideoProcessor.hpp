@@ -24,6 +24,7 @@ class VideoProcessor {
     Mat blend;
     Mat frame;
     Mat src;
+    Mat roi;
     VideoCapture camera;
     
     int cannyLow;
@@ -31,8 +32,14 @@ class VideoProcessor {
     int frameNumber;
     
     string vidPath;
+
+    int mouseX;
+    int mouseY;
+    bool mouseClicked;
     
+    bool desctiptorFound;
     bool paused;
+
     bool ERROR;
     string err;
     
@@ -43,7 +50,9 @@ class VideoProcessor {
     bool checkInputArgs(int argc, const char * argv[]);
     void processVideo();
     void processImage();
+    void createDescriptor();
     void setupControlWindow(int);
+    void MouseCallBackFunc(int event, int x, int y, int flags, void* userdata);
     
 };
 

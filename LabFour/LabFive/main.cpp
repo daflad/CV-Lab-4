@@ -8,6 +8,18 @@
 
 #include "VideoProcessor.hpp"
 
+void MouseCallBackFunc(int event, int x, int y, int flags, void* userdata) {
+    
+    VideoProcessor* vp = static_cast<VideoProcessor*>( userdata );
+    
+    if (event == CV_EVENT_LBUTTONUP) {
+        vp->mouseX = x;
+        vp->mouseY = y;
+        vp->mouseClicked = true;
+        printf("Left mouse click at :: x = %d\t y = %d\n",x,y);
+    }
+}
+
 //-----------------------------------------------------------------------
 // Main
 //-----------------------------------------------------------------------
@@ -27,7 +39,15 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     
-    // Play video applying 
+    int *h = &vp.cannyHigh;
+    int *l = &vp.cannyLow;
+    // Window & trackbars
+    namedWindow("blended", CV_WINDOW_AUTOSIZE);
+    createTrackbar("Canny High", "blended", h, 255);
+    createTrackbar("Canny Low", "blended", l, 255);
+    setMouseCallback("blended", MouseCallBackFunc, &vp);
+    
+    // Play video applying
     vp.processVideo();
     return 0;
 }
