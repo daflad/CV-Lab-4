@@ -44,6 +44,7 @@ class VideoProcessor {
     string err;
     
     vector<Vec3f> circles;
+    int* roiHist;
     
     VideoProcessor(string filePath);
     

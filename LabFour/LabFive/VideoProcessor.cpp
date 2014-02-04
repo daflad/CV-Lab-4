@@ -72,6 +72,19 @@ void VideoProcessor::processVideo() {
 // Build histogram of Cr & Cb & divide by total pixels
 //
 void VideoProcessor::createDescriptor() {
+    // No need to worry about 3 channels here as condensing into 1 value
+    int numPix = roi.rows * roi.cols;
+    float Cr[numPix];
+    float Cb[numPix];
+    int index = 0;
+    for (int i = 0; i < roi.rows; i++) {
+        for (int j = 0; j < roi.cols; j++) {
+            Vec3b pix = roi.at<Vec3b>(i,j);
+            Cr[index] = 15 * (float)pix[2] / (pix[0] + pix[1] + pix[2] + 1);
+            Cb[index++] = 15 * (float)pix[0] / (pix[0] + pix[1] + pix[2] + 1);
+            printf("Cr : %f, Cb : %f\n", Cr[index- 1], Cb[index -1]);
+        }
+    }
     
 }
 
