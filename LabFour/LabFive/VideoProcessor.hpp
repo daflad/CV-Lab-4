@@ -30,6 +30,8 @@ class VideoProcessor {
     int cannyLow;
     int cannyHigh;
     int frameNumber;
+    int colourQuant;
+    int threshold;
     
     string vidPath;
 

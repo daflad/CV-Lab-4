@@ -41,10 +41,14 @@ int main(int argc, const char * argv[]) {
     
     int *h = &vp.cannyHigh;
     int *l = &vp.cannyLow;
+    int *t = &vp.threshold;
+//    int *q = &vp.colourQuant;
     // Window & trackbars
     namedWindow("blended", CV_WINDOW_AUTOSIZE);
     createTrackbar("Canny High", "blended", h, 255);
     createTrackbar("Canny Low", "blended", l, 255);
+    createTrackbar("Detection Threshold", "blended", t, 100);
+//    createTrackbar("Colour Quantization value", "blended", q, 15);
     setMouseCallback("blended", MouseCallBackFunc, &vp);
     
     // Play video applying

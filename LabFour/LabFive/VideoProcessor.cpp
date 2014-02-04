@@ -18,7 +18,8 @@ VideoProcessor::VideoProcessor(string filePath){
     cannyLow = 45;
     cannyHigh =  50;
     frameNumber = 1;
-    
+    colourQuant = 15;
+    threshold = 50;
     paused = false;
     ERROR = false;
     desctiptorFound = false;
@@ -80,12 +81,28 @@ void VideoProcessor::createDescriptor() {
     for (int i = 0; i < roi.rows; i++) {
         for (int j = 0; j < roi.cols; j++) {
             Vec3b pix = roi.at<Vec3b>(i,j);
-            Cr[index] = 15 * (float)pix[2] / (pix[0] + pix[1] + pix[2] + 1);
-            Cb[index++] = 15 * (float)pix[0] / (pix[0] + pix[1] + pix[2] + 1);
+            Cr[index] = colourQuant * (float)pix[2] / (pix[0] + pix[1] + pix[2] + 1);
+            Cb[index++] = colourQuant * (float)pix[0] / (pix[0] + pix[1] + pix[2] + 1);
             printf("Cr : %f, Cb : %f\n", Cr[index- 1], Cb[index -1]);
         }
     }
-    
+    int roiHist[15][15] = {0};
+    for (int i = 0; i < numPix; i++) {
+        int Cri = (int)Cr[i];
+        int Cbi = (int)Cb[i];
+        if ( Cr[i] - (int)Cr[i] > 0.5) {
+            Cri++;
+        }
+        if (Cb[i] - (int)Cb[i] > 0.5) {
+            Cbi++;
+        }
+        roiHist[Cri][Cbi]++;
+    }
+    for (int i = 0; i < 15; i++) {
+        for (int j = 0; j < 15; j++) {
+            printf("x : %d \t y : %d\tv : %d\n",i,j,roiHist[i][j]);
+        }
+    }
 }
 
 // Image processing
@@ -113,8 +130,6 @@ void VideoProcessor::processImage() {
         frameNumber++;
     }
     
-    //resize(frame, frame, Size(440,248));
-    
     // Begin image processing
 
     cvtColor(frame, edges, CV_BGR2GRAY);
@@ -124,7 +139,7 @@ void VideoProcessor::processImage() {
     edges.copyTo(src);
     
     Canny(edges, edges, cannyLow, cannyHigh, 3);
-    HoughCircles( src, circles, CV_HOUGH_GRADIENT, 1, src.rows/8, cannyHigh, cannyLow, 0, 0 );
+    HoughCircles( src, circles, CV_HOUGH_GRADIENT, 1, src.rows/8, cannyHigh, threshold, 0, 0 );
     
     // merge images & display
     frame.copyTo(blend);
@@ -156,6 +171,7 @@ void VideoProcessor::processImage() {
                 roi = frame(Rect(Point(center.x - radius, center.y - radius), Size(2*radius + 3, 2*radius + 3)));
                 // Show selected region
                 namedWindow("roi", CV_WINDOW_AUTOSIZE);
+                moveWindow("roi", frame.cols + 20, 0);
                 imshow("roi", roi);
                 createDescriptor();
                 break;
