@@ -77,17 +77,23 @@ void VideoProcessor::createDescriptor() {
     int numPix = roi.rows * roi.cols;
     float Cr[numPix];
     float Cb[numPix];
+    // Keep track of index for new array
     int index = 0;
     for (int i = 0; i < roi.rows; i++) {
         for (int j = 0; j < roi.cols; j++) {
+            // Fetch all values
             Vec3b pix = roi.at<Vec3b>(i,j);
+            // Calculate conversion and quantize
             Cr[index] = colourQuant * (float)pix[2] / (pix[0] + pix[1] + pix[2] + 1);
             Cb[index++] = colourQuant * (float)pix[0] / (pix[0] + pix[1] + pix[2] + 1);
-            printf("Cr : %f, Cb : %f\n", Cr[index- 1], Cb[index -1]);
+            // Debug
+            //printf("Cr : %f, Cb : %f\n", Cr[index- 1], Cb[index -1]);
         }
     }
+    // Histogram array
     int roiHist[15][15] = {0};
     for (int i = 0; i < numPix; i++) {
+        // round values up or down.
         int Cri = (int)Cr[i];
         int Cbi = (int)Cb[i];
         if ( Cr[i] - (int)Cr[i] > 0.5) {
@@ -96,13 +102,15 @@ void VideoProcessor::createDescriptor() {
         if (Cb[i] - (int)Cb[i] > 0.5) {
             Cbi++;
         }
+        // increment index
         roiHist[Cri][Cbi]++;
     }
-    for (int i = 0; i < 15; i++) {
-        for (int j = 0; j < 15; j++) {
-            printf("x : %d \t y : %d\tv : %d\n",i,j,roiHist[i][j]);
-        }
-    }
+    // Debug
+//    for (int i = 0; i < 15; i++) {
+//        for (int j = 0; j < 15; j++) {
+//            printf("x : %d \t y : %d\tv : %d\n",i,j,roiHist[i][j]);
+//        }
+//    }
 }
 
 // Image processing
