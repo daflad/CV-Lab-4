@@ -2,8 +2,8 @@
 //  VideoProcessor.cpp
 //  LabFour
 //
-//  Created by Stephen John Russell on 28/01/2014.
-//  Copyright (c) 2014 Stephen John Russell. All rights reserved.
+//  Created by Stephen John Russell & Peter Butcher on 28/01/2014.
+//  Copyright (c) 2014 Stephen John Russell & Peter Butcher. All rights reserved.
 //
 
 #include "VideoProcessor.hpp"
