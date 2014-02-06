@@ -32,6 +32,7 @@ class VideoProcessor {
     int frameNumber;
     int colourQuant;
     int threshold;
+    int closestIndex;
     
     string vidPath;
 
@@ -46,14 +47,16 @@ class VideoProcessor {
     string err;
     
     vector<Vec3f> circles;
-    int* roiHist;
+    vector<vector<vector<int>>> frameHists;
+    vector<vector<int>> roiHist;
     
     VideoProcessor(string filePath);
     
     bool checkInputArgs(int argc, const char * argv[]);
     void processVideo();
     void processImage();
-    void createDescriptor();
+    int compareHists(vector<vector<int>>);
+    void createDescriptor(bool);
     void setupControlWindow(int);
     void MouseCallBackFunc(int event, int x, int y, int flags, void* userdata);
     

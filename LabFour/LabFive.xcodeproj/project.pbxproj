@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6D4F6687189BC4C2006F746E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D4F6684189BC4C2006F746E /* main.cpp */; };
-		6D4F6688189BC4C2006F746E /* VideoProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D4F6685189BC4C2006F746E /* VideoProcessor.cpp */; };
+		6D2B197818A3DF9B00B6F10E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D2B197518A3DF9B00B6F10E /* main.cpp */; };
+		6D2B197918A3DF9B00B6F10E /* VideoProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D2B197618A3DF9B00B6F10E /* VideoProcessor.cpp */; };
 		6DD7861C1897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD785E51897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */; };
 		6DD7861D1897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD785E61897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */; };
 		6DD7861E1897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD785E71897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */; };
@@ -79,9 +79,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6D4F6684189BC4C2006F746E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = LabFive/main.cpp; sourceTree = SOURCE_ROOT; };
-		6D4F6685189BC4C2006F746E /* VideoProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoProcessor.cpp; path = LabFive/VideoProcessor.cpp; sourceTree = SOURCE_ROOT; };
-		6D4F6686189BC4C2006F746E /* VideoProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VideoProcessor.hpp; path = LabFive/VideoProcessor.hpp; sourceTree = SOURCE_ROOT; };
+		6D2B197518A3DF9B00B6F10E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		6D2B197618A3DF9B00B6F10E /* VideoProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoProcessor.cpp; sourceTree = "<group>"; };
+		6D2B197718A3DF9B00B6F10E /* VideoProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VideoProcessor.hpp; sourceTree = "<group>"; };
 		6DD785B21896C44500678D8B /* LabFive */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LabFive; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DD785E51897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_calib3d.2.4.7.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_calib3d.2.4.7.dylib; sourceTree = "<group>"; };
 		6DD785E61897ECE400678D8B /* libopencv_calib3d.2.4.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_calib3d.2.4.7.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_calib3d.2.4.7.dylib; sourceTree = "<group>"; };
@@ -226,9 +226,9 @@
 		6DD785B41896C44500678D8B /* LabFive */ = {
 			isa = PBXGroup;
 			children = (
-				6D4F6684189BC4C2006F746E /* main.cpp */,
-				6D4F6685189BC4C2006F746E /* VideoProcessor.cpp */,
-				6D4F6686189BC4C2006F746E /* VideoProcessor.hpp */,
+				6D2B197518A3DF9B00B6F10E /* main.cpp */,
+				6D2B197618A3DF9B00B6F10E /* VideoProcessor.cpp */,
+				6D2B197718A3DF9B00B6F10E /* VideoProcessor.hpp */,
 			);
 			name = LabFive;
 			path = LabFour;
@@ -347,8 +347,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D4F6688189BC4C2006F746E /* VideoProcessor.cpp in Sources */,
-				6D4F6687189BC4C2006F746E /* main.cpp in Sources */,
+				6D2B197918A3DF9B00B6F10E /* VideoProcessor.cpp in Sources */,
+				6D2B197818A3DF9B00B6F10E /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
