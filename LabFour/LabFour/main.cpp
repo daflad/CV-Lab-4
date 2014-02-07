@@ -16,7 +16,8 @@ void MouseCallBackFunc(int event, int x, int y, int flags, void* userdata) {
         vp->mouseX = x;
         vp->mouseY = y;
         vp->mouseClicked = true;
-        printf("Left mouse click at :: x = %d\t y = %d\n",x,y);
+        // Debug
+//        printf("Left mouse click at :: x = %d\t y = %d\n",x,y);
     }
 }
 
@@ -45,10 +46,9 @@ int main(int argc, const char * argv[]) {
 //    int *q = &vp.colourQuant;
     // Window & trackbars
     namedWindow("blended", CV_WINDOW_AUTOSIZE);
-    createTrackbar("Canny High", "blended", h, 255);
-    createTrackbar("Canny Low", "blended", l, 255);
+    createTrackbar("Canny High", "blended", h, 205);
+    createTrackbar("Canny Low", "blended", l, 205);
     createTrackbar("Detection Threshold", "blended", t, 100);
-//    createTrackbar("Colour Quantization value", "blended", q, 15);
     setMouseCallback("blended", MouseCallBackFunc, &vp);
     
     // Play video applying

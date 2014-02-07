@@ -60,7 +60,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "/Users/stephenjohnrussell/dev/CV-Lab-4/test_sphere_1-2.mp4"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

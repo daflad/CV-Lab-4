@@ -16,10 +16,10 @@ VideoProcessor::VideoProcessor(string filePath){
     
     // Setup parameters
     cannyLow = 45;
-    cannyHigh =  50;
+    cannyHigh =  10;
     frameNumber = 1;
-    colourQuant = 15;
-    threshold = 40;
+    colourQuant = 14;
+    threshold = 10;
     closestIndex = 0;
     paused = false;
     ERROR = false;
@@ -66,95 +66,6 @@ void VideoProcessor::processVideo() {
     }
 }
 
-
-// Create Desctiptor
-// =================
-//
-// Conver to chromatic colour space:
-// Cr = R / (R + G + B + 1) & Cb = B / (R + G + B + 1)
-// Build histogram of Cr & Cb & divide by total pixels
-//
-void VideoProcessor::createDescriptor(bool chosenCircle, int index, Mat* roi) {
-    // No need to worry about 3 channels here as condensing into 1 value
-     
-    int numPix = roi->rows * roi->cols;
-    float Cr[numPix];
-    float Cb[numPix];
-    // Keep track of index for new array
-    int ind = 0;
-    for (int i = 0; i < roi->rows; i++) {
-        for (int j = 0; j < roi->cols; j++) {
-            // Fetch all values
-            Vec3b pix = roi->at<Vec3b>(i,j);
-            // Calculate conversion and quantize
-            Cr[index] = colourQuant * (float)pix[2] / (pix[0] + pix[1] + pix[2] + 1);
-            Cb[index++] = colourQuant * (float)pix[0] / (pix[0] + pix[1] + pix[2] + 1);
-            // Debug
-            //printf("Cr : %f, Cb : %f\n", Cr[index- 1], Cb[index -1]);
-        }
-    }
-    // Histogram array
-    float hist[15][15];
-    for (int i = 0; i < 15; i++) {
-        for (int j = 0; j < 15; j++) {
-            hist[i][j] = 0;
-        }
-    }
-    for (int i = 0; i < numPix; i++) {
-        // round values up or down.
-        int Cri = (int)Cr[i];
-        int Cbi = (int)Cb[i];
-        if ( Cr[i] - (int)Cr[i] > 0.5) {
-            Cri++;
-        }
-        if (Cb[i] - (int)Cb[i] > 0.5) {
-            Cbi++;
-        }
-        // increment index
-        if (chosenCircle) {
-            roiHist[Cri][Cbi]++;
-        } else {
-            hist[Cri][Cbi]++;
-        }
-    }
-    for (int i = 0; i < 15; i++) {
-        for (int j = 0; j < 15; j++) {
-            if (chosenCircle) {
-                roiHist[i][j] /= numPix;
-            } else {
-                hist[i][j] /= numPix;
-            }
-        }
-    }
-    
-    Descriptor d(hist, ind);
-    des.push_back(d);
-
-    // Debug
-//    for (int i = 0; i < 15; i++) {
-//        for (int j = 0; j < 15; j++) {
-//            printf("x : %d \t y : %d\tv : %d\n",i,j,roiHist[i][j]);
-//        }
-//    }
-}
-
-float VideoProcessor::compareHists(float hist[15][15]) {
-    
-    float sum = 0;
-    
-    for (int i = 0; i < 15; i++) {
-        for (int j = 0; j < 15; j++) {
-            if (hist[i][j] > roiHist[i][j]) {
-                sum += roiHist[i][j];
-            } else {
-                sum += hist[i][j];
-            }
-        }
-    }
-    printf("The sum is :: %f\n", sum);
-    return sum;
-}
-
 // Image processing
 // ================
 //
@@ -164,7 +75,7 @@ float VideoProcessor::compareHists(float hist[15][15]) {
 // Blur frame & perform canny edge detection
 // Blur frame & perform HoughCircle detection
 void VideoProcessor::processImage() {
-
+    
     // Copy data from video / camera to frame
     if (!paused) {
         camera >> frame;
@@ -172,9 +83,9 @@ void VideoProcessor::processImage() {
     
     // Check for empty frame as this is end of video
     if (frame.empty()) {
-        camera.set(CV_CAP_PROP_POS_FRAMES, 0);
+        
         // Reload video & reset frame number
-//        camera = VideoCapture(vidPath);
+        camera = VideoCapture(vidPath);
         camera >> frame;
         frameNumber = 0;
     } else {
@@ -182,15 +93,15 @@ void VideoProcessor::processImage() {
     }
     
     // Begin image processing
-
+    
     cvtColor(frame, edges, CV_BGR2GRAY);
-
+    
     // Blur & copy for both Canny & HoughCircles
     GaussianBlur(edges, edges, Size(9, 9), 2, 2);
     edges.copyTo(src);
     
     Canny(edges, edges, cannyLow, cannyHigh, 3);
-    HoughCircles( src, circles, CV_HOUGH_GRADIENT, 1, src.rows/8, cannyHigh, threshold, 0, 0 );
+    HoughCircles( src, circles, CV_HOUGH_GRADIENT, 1, src.rows/8, cannyHigh, threshold + 50, 0, frame.rows / 3 );
     
     // merge images & display
     frame.copyTo(blend);
@@ -203,13 +114,17 @@ void VideoProcessor::processImage() {
         for( size_t i = 0; i < circles.size(); i++ ) {
             Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
             int radius = cvRound(circles[i][2]);
-            Mat m = frame(Rect(Point(center.x - radius, center.y - radius), Size(2*radius + 3, 2*radius + 3)));
-            createDescriptor(false, index++, &m);
-            if (!desctiptorFound) {
-                // circle center
-                circle( blend, center, 3, Scalar(255,100,100), -1, 8, 0 );
-                // circle outline
-                circle( blend, center, radius, Scalar(0,0,255), 3, 8, 0 );
+            if ((center.x - radius > 0) && (center.y - radius > 0)) {
+                if ((center.x + radius < frame.rows) && (center.y + radius < frame.cols)) {
+                    Mat m = frame(Rect(Point(center.x - radius, center.y - radius), Size(2*radius, 2*radius)));
+                    createDescriptor(false, index++, &m);
+                    if (!desctiptorFound) {
+                        // circle center
+                        circle( blend, center, 3, Scalar(255,100,100), -1, 8, 0 );
+                        // circle outline
+                        circle( blend, center, radius, Scalar(0,0,255), 3, 8, 0 );
+                    }
+                }
             }
         }
         if (desctiptorFound) {
@@ -243,7 +158,8 @@ void VideoProcessor::processImage() {
             float dist = sqrt(x2 + y2);
             // Have we found a circle?
             if (dist <= radius + 3) {
-                printf("Found circle at x : %d, y : %d\n", center.x, center.y);
+                // Debug
+//                printf("Found circle at x : %d, y : %d\n", center.x, center.y);
                 roi = frame(Rect(Point(center.x - radius, center.y - radius), Size(2*radius + 3, 2*radius + 3)));
                 // Show selected region
                 namedWindow("roi", CV_WINDOW_AUTOSIZE);
@@ -262,7 +178,117 @@ void VideoProcessor::processImage() {
     
 }
 
+
+// Create Desctiptor
+// =================
+//
+// Conver to chromatic colour space:
+// Cr = R / (R + G + B + 1) & Cb = B / (R + G + B + 1)
+// Build histogram of Cr & Cb & divide by total pixels
+//
+void VideoProcessor::createDescriptor(bool chosenCircle, int index, Mat* roi) {
+    // No need to worry about 3 channels here as condensing into 1 value
+     
+    int numPix = roi->rows * roi->cols;
+    float Cr[numPix];
+    float Cg[numPix];
+    // Keep track of index for new array
+    int ind = 0;
+    for (int i = 0; i < roi->rows; i++) {
+        for (int j = 0; j < roi->cols; j++) {
+            // Fetch all values
+            Vec3b pix = roi->at<Vec3b>(i,j);
+            // Calculate conversion and quantize
+            Cr[ind] = colourQuant * (float)pix[2] / (pix[0] + pix[1] + pix[2] + 1);
+            Cg[ind++] = colourQuant * (float)pix[1] / (pix[0] + pix[1] + pix[2] + 1);
+            // Debug
+            //printf("Cr : %f, Cb : %f\n", Cr[index- 1], Cb[index -1]);
+        }
+    }
+    // Histogram array
+    float hist[15][15];
+    for (int i = 0; i < 15; i++) {
+        for (int j = 0; j < 15; j++) {
+            hist[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < numPix; i++) {
+        // round values up or down.
+        int Cri = (int)Cr[i];
+        int Cgi = (int)Cg[i];
+        if ( Cr[i] - Cr[i] > 0.5) {
+            Cri++;
+        }
+        if (Cg[i] - Cg[i] > 0.5) {
+            Cgi++;
+        }
+        if (Cgi < 0) {
+            Cgi = 0;
+        }
+        if (Cri < 0) {
+            Cri = 0;
+        }
+        // increment index
+        if (chosenCircle) {
+            roiHist[Cri][Cgi]++;
+        } else {
+            hist[Cri][Cgi]++;
+        }
+    }
+    for (int i = 0; i < 15; i++) {
+        for (int j = 0; j < 15; j++) {
+            if (chosenCircle) {
+                roiHist[i][j] /= numPix;
+            } else {
+                hist[i][j] /= numPix;
+            }
+        }
+    }
+    if (!chosenCircle) {
+        // Construct descriptor and add to list
+        Descriptor d(hist, index);
+        des.push_back(d);
+    }
+
+    // Debug
+//    for (int i = 0; i < 15; i++) {
+//        for (int j = 0; j < 15; j++) {
+//            printf("x : %d \t y : %d\tv : %d\n",i,j,roiHist[i][j]);
+//        }
+//    }
+}
+
+
+// Compare Hists
+// =============
+//
+// Compaer the current roi against the passed
+float VideoProcessor::compareHists(float hist[15][15]) {
+    
+    float sum = 0;
+    
+    // For each possible location in hist take the smaller value and sum
+    for (int i = 0; i < 15; i++) {
+        for (int j = 0; j < 15; j++) {
+            if (hist[i][j] > roiHist[i][j]) {
+                sum += roiHist[i][j];
+            } else {
+                sum += hist[i][j];
+            }
+        }
+    }
+    // Debug
+//    printf("The sum is :: %f\n", sum);
+    return sum;
+}
+
+
+// Descriptor
+// ==========
+//
+// Descriptor class to simplify storing arrays.
 Descriptor::Descriptor(float h[15][15], int i) {
+    // Copy the array to the descriptor array.
     for (int j = 0; j < 15; j++) {
         for (int k = 0; k < 15; k++) {
             roiHist[j][k] = h[j][k];
