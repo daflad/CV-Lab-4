@@ -16,6 +16,15 @@
 using namespace cv;
 using namespace std;
 
+
+class Descriptor {
+    
+public:
+    Descriptor(float[15][15],int);
+    float roiHist[15][15];
+    int index;
+};
+
 class VideoProcessor {
     
     public :
@@ -47,19 +56,20 @@ class VideoProcessor {
     string err;
     
     vector<Vec3f> circles;
-    vector<vector<vector<int>>> frameHists;
-    vector<vector<int>> roiHist;
+    vector<Descriptor> des;
+    float roiHist[15][15];
     
     VideoProcessor(string filePath);
     
-    bool checkInputArgs(int argc, const char * argv[]);
-    void processVideo();
-    void processImage();
-    int compareHists(vector<vector<int>>);
-    void createDescriptor(bool);
-    void setupControlWindow(int);
-    void MouseCallBackFunc(int event, int x, int y, int flags, void* userdata);
+    bool    checkInputArgs(int argc, const char * argv[]);
+    void    processVideo();
+    void    processImage();
+    float   compareHists(float hist[15][15]);
+    void    createDescriptor(bool, int, Mat*);
+    void    setupControlWindow(int);
+    void    MouseCallBackFunc(int event, int x, int y, int flags, void* userdata);
     
 };
+
 
 #endif /* defined(__LabFour__VideoProcessor__) */

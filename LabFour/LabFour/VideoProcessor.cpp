@@ -19,7 +19,7 @@ VideoProcessor::VideoProcessor(string filePath){
     cannyHigh =  50;
     frameNumber = 1;
     colourQuant = 15;
-    threshold = 50;
+    threshold = 40;
     closestIndex = 0;
     paused = false;
     ERROR = false;
@@ -74,17 +74,18 @@ void VideoProcessor::processVideo() {
 // Cr = R / (R + G + B + 1) & Cb = B / (R + G + B + 1)
 // Build histogram of Cr & Cb & divide by total pixels
 //
-void VideoProcessor::createDescriptor(bool chosenCircle) {
+void VideoProcessor::createDescriptor(bool chosenCircle, int index, Mat* roi) {
     // No need to worry about 3 channels here as condensing into 1 value
-    int numPix = roi.rows * roi.cols;
+     
+    int numPix = roi->rows * roi->cols;
     float Cr[numPix];
     float Cb[numPix];
     // Keep track of index for new array
-    int index = 0;
-    for (int i = 0; i < roi.rows; i++) {
-        for (int j = 0; j < roi.cols; j++) {
+    int ind = 0;
+    for (int i = 0; i < roi->rows; i++) {
+        for (int j = 0; j < roi->cols; j++) {
             // Fetch all values
-            Vec3b pix = roi.at<Vec3b>(i,j);
+            Vec3b pix = roi->at<Vec3b>(i,j);
             // Calculate conversion and quantize
             Cr[index] = colourQuant * (float)pix[2] / (pix[0] + pix[1] + pix[2] + 1);
             Cb[index++] = colourQuant * (float)pix[0] / (pix[0] + pix[1] + pix[2] + 1);
@@ -93,7 +94,12 @@ void VideoProcessor::createDescriptor(bool chosenCircle) {
         }
     }
     // Histogram array
-    vector<vector<int>> hist;
+    float hist[15][15];
+    for (int i = 0; i < 15; i++) {
+        for (int j = 0; j < 15; j++) {
+            hist[i][j] = 0;
+        }
+    }
     for (int i = 0; i < numPix; i++) {
         // round values up or down.
         int Cri = (int)Cr[i];
@@ -111,10 +117,19 @@ void VideoProcessor::createDescriptor(bool chosenCircle) {
             hist[Cri][Cbi]++;
         }
     }
-
-    if (!chosenCircle) {
-        frameHists.push_back(hist);
+    for (int i = 0; i < 15; i++) {
+        for (int j = 0; j < 15; j++) {
+            if (chosenCircle) {
+                roiHist[i][j] /= numPix;
+            } else {
+                hist[i][j] /= numPix;
+            }
+        }
     }
+    
+    Descriptor d(hist, ind);
+    des.push_back(d);
+
     // Debug
 //    for (int i = 0; i < 15; i++) {
 //        for (int j = 0; j < 15; j++) {
@@ -123,9 +138,9 @@ void VideoProcessor::createDescriptor(bool chosenCircle) {
 //    }
 }
 
-int VideoProcessor::compareHists(vector<vector<int>> hist) {
+float VideoProcessor::compareHists(float hist[15][15]) {
     
-    int sum = 0;
+    float sum = 0;
     
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 15; j++) {
@@ -136,6 +151,7 @@ int VideoProcessor::compareHists(vector<vector<int>> hist) {
             }
         }
     }
+    printf("The sum is :: %f\n", sum);
     return sum;
 }
 
@@ -156,8 +172,9 @@ void VideoProcessor::processImage() {
     
     // Check for empty frame as this is end of video
     if (frame.empty()) {
+        camera.set(CV_CAP_PROP_POS_FRAMES, 0);
         // Reload video & reset frame number
-        camera = VideoCapture(vidPath);
+//        camera = VideoCapture(vidPath);
         camera >> frame;
         frameNumber = 0;
     } else {
@@ -182,12 +199,13 @@ void VideoProcessor::processImage() {
     if (!mouseClicked) {
         
         // Draw the circles detected
+        int index = 0;
         for( size_t i = 0; i < circles.size(); i++ ) {
             Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
             int radius = cvRound(circles[i][2]);
-            if (desctiptorFound) {
-                createDescriptor(false);
-            } else {
+            Mat m = frame(Rect(Point(center.x - radius, center.y - radius), Size(2*radius + 3, 2*radius + 3)));
+            createDescriptor(false, index++, &m);
+            if (!desctiptorFound) {
                 // circle center
                 circle( blend, center, 3, Scalar(255,100,100), -1, 8, 0 );
                 // circle outline
@@ -195,14 +213,16 @@ void VideoProcessor::processImage() {
             }
         }
         if (desctiptorFound) {
-            int maxD = 0;
-            for (int i = 0; i < frameHists.size(); i++) {
-                int d = compareHists(frameHists[i]);
+            float maxD = 0;
+            for (int i = 0; i < des.size(); i++) {
+                float d = compareHists(des[i].roiHist);
                 if (maxD < d) {
                     maxD = d;
                     closestIndex = i;
                 }
             }
+            des.clear();
+            printf("Chosen Index :: %d\n", closestIndex);
             Point center(cvRound(circles[closestIndex][0]),
                          cvRound(circles[closestIndex][1]));
             int radius = cvRound(circles[closestIndex][2]);
@@ -229,7 +249,7 @@ void VideoProcessor::processImage() {
                 namedWindow("roi", CV_WINDOW_AUTOSIZE);
                 moveWindow("roi", frame.cols + 20, 0);
                 imshow("roi", roi);
-                createDescriptor(true);
+                createDescriptor(true, 0, &roi);
                 desctiptorFound = true;
                 break;
             }
@@ -240,4 +260,13 @@ void VideoProcessor::processImage() {
     // update display
     imshow("blended", blend );
     
+}
+
+Descriptor::Descriptor(float h[15][15], int i) {
+    for (int j = 0; j < 15; j++) {
+        for (int k = 0; k < 15; k++) {
+            roiHist[j][k] = h[j][k];
+        }
+    }
+    index = i;
 }
