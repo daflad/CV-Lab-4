@@ -5,7 +5,7 @@ Detection and recognition
 
 <b>Task:<b>
 <ol><li>
-	Reads a movie file whose name is passed as argv[1] argument. The movie will be played in a loop continuously. If no argument is passed, the application captures life video from the camera.
+	Reads a movie file whose name is passed as argv[1] argument. The movie will be played in a loop continuously. If no argument is passed, the application captures live video from the camera.
 <br /><br /></li><li>
 	For each frame:
 	<ul><li>
